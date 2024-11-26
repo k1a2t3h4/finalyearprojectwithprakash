@@ -1,0 +1,649 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#admin-dashboard {
+    padding: 20px;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 20px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+section {
+    margin-top: 20px;
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+}
+#componentsContainer li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+}
+
+#componentsContainer li img {
+    max-width: 200px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    text-decoration: none;
+}
+
+.button:hover {
+    background-color: #45a049;
+}
+
+#addComponentBtn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+}
+
+#addComponentBtn:hover {
+    background-color: #45a049;
+}
+
+#componentsContainer, #userContainer {
+    list-style-type: none;
+    padding: 0;
+}
+
+#componentsContainer li, #userContainer li {
+    background-color: #f9f9f9;
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ddd;
+}
+
+canvas {
+    width: 100%;
+    max-width: 600px;
+    margin-top: 20px;
+}
+/* Popup styling */
+.edit-form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 20px;
+    display: none; /* Hidden by default */
+    flex-direction: column;
+}
+
+/* Form styling */
+#dynamicForm {
+    display: flex;
+    flex-direction: column;
+}
+
+#dynamicForm label {
+    margin-top: 10px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#dynamicForm input,
+#dynamicForm textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Buttons styling */
+button#updatedetailsBtn,
+button#closeeditFormBtn,
+button#updateorderBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button#closeeditFormBtn {
+    background-color: #f44336;
+}
+
+button#updatedetailsBtn:hover,
+button#closeeditFormBtn:hover,
+button#updateorderBtn:hover {
+    opacity: 0.9;
+}
+
+button#closeeditFormBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+    .edit-form-popup {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .edit-form-popup {
+        width: 100%;
+    }
+}
+
+#overlay {
+    display: none; /* Hidden by default, shown with JavaScript */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+#component-gallery {
+    max-width: 90%;
+    max-height: 80%;
+    overflow-y: auto;
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.form-popup {
+    width: 70%; /* Adjust width to make it larger */
+    max-width: 800px; /* Set a maximum width */
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    margin-top: 20px; /* Space it below the selected component */
+    z-index: 1010;
+}
+
+.form-popup form {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-popup label,
+.form-popup input,
+.form-popup textarea,
+.form-popup button {
+    font-size: 16px; /* Increase font size for better readability */
+    margin-bottom: 10px;
+}
+
+#dynamic-form input,
+#dynamic-form textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#saveBtn, #closeFormBtn {
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#saveBtn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+}
+
+#closeFormBtn {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+}
+
+
+#dynamic-form {
+    display: flex;
+    flex-direction: column;
+}
+
+#dynamic-form label {
+    margin-top: 10px;
+}
+
+#dynamic-form input, #dynamic-form textarea {
+    margin-bottom: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+#saveBtn, #closeFormBtn {
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+}
+
+#saveBtn {
+    background-color: #28a745;
+    color: white;
+}
+
+#closeFormBtn {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Styles for the popup container */
+.child-componentgallery-and-form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 800px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 20px;
+    display: none; /* Default state is hidden */
+    flex-direction: column;
+}
+
+/* Styles for the child components list */
+#child-components-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-bottom: 20px;
+}
+
+/* Individual child component cards */
+#child-components-list .child-component {
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    padding: 15px;
+    border-radius: 6px;
+    width: calc(33.33% - 10px);
+    box-sizing: border-box;
+    text-align: center;
+}
+
+#child-components-list .child-component h3 {
+    margin-bottom: 10px;
+    font-size: 16px;
+    color: #333;
+}
+
+#child-components-list .child-component p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+/* Styles for the child component form */
+#child-component-form {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Form elements inside the child component form */
+#child-component-form input,
+#child-component-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Styles for the Save and Close buttons */
+button#savechildBtn,
+button#closechildFormBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button#closechildFormBtn {
+    background-color: #f44336;
+}
+
+button#savechildBtn:hover,
+button#closechildFormBtn:hover {
+    opacity: 0.9;
+}
+
+/* Close button hover effect */
+button#closechildFormBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .child-componentgallery-and-form-popup {
+        width: 90%;
+    }
+
+    #child-components-list .child-component {
+        width: calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    #child-components-list .child-component {
+        width: 100%;
+    }
+}
+
+/* Styles for the edit form popup container */
+.edit-form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    max-width: 600px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    z-index: 1000;
+    padding: 20px;
+    display: none; /* Default state is hidden */
+    flex-direction: column;
+}
+
+/* Style for the order-edit div */
+#order-edit {
+    background-color: #f1f1f1;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 6px;
+}
+
+/* Style for the edit-form div */
+#edit-form {
+    background-color: #f1f1f1;
+    padding: 20px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+/* Form input styles */
+#edit-form input, #edit-form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+/* Styles for buttons inside the popup */
+button#updateorderBtn, button#updatedetailsBtn, button#closeeditFormBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button#closeeditFormBtn {
+    background-color: #f44336;
+}
+
+/* Hover effects for buttons */
+button#updateorderBtn:hover, button#updatedetailsBtn:hover, button#closeeditFormBtn:hover {
+    opacity: 0.9;
+}
+
+button#closeeditFormBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .edit-form-popup {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    button#updateorderBtn, button#updatedetailsBtn, button#closeeditFormBtn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+/* Styles for the delete confirmation popup */
+.delete-confirm-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 20px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    border-radius: 8px;
+    display: none; /* Hidden by default */
+    text-align: center;
+}
+
+/* Style for the message text */
+#delete-message p {
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Delete and cancel buttons */
+button#deleteConfirmBtn, button#closeDeletePopupBtn {
+    padding: 10px 20px;
+    font-size: 14px;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button#deleteConfirmBtn {
+    background-color: #dc3545;
+}
+
+button#closeDeletePopupBtn {
+    background-color: #6c757d;
+}
+
+/* Hover effects for buttons */
+button#deleteConfirmBtn:hover, button#closeDeletePopupBtn:hover {
+    opacity: 0.9;
+}
+
+/* Close button hover effect */
+button#closeDeletePopupBtn:hover {
+    background-color: #5a6268;
+}
+
+/* Media query for responsiveness */
+@media (max-width: 768px) {
+    .delete-confirm-popup {
+        width: 90%;
+    }
+}
+/* General styling for the delete confirmation popup */
+.delete-confirm-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+}
+
+#delete-child-message p {
+    font-size: 16px;
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+#deleteChildConfirmBtn {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+#closeChildDeletePopupBtn {
+    background-color: #95a5a6;
+    color: #fff;
+}
+
+/* Add responsive behavior for smaller screens */
+@media (max-width: 600px) {
+    .delete-confirm-popup {
+        width: 90%;
+    }
+
+    button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+/* Popup container styling */
+.edit-child-form-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px; /* Set a width for the popup */
+    background-color: #ffffff; /* Background color */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+    z-index: 1000; /* Ensure it’s on top of other elements */
+    display: none; /* Initially hidden */
+    padding: 20px; /* Padding inside the popup */
+}
+
+/* Form styling */
+#edit-child-form {
+    margin-bottom: 20px; /* Space below the form */
+}
+
+/* Input styling */
+input[type="text"], input[type="number"], select {
+    width: 100%; /* Full width */
+    padding: 10px; /* Padding inside the input */
+    border: 1px solid #ccc; /* Light border */
+    border-radius: 4px; /* Rounded corners for inputs */
+    margin-bottom: 15px; /* Space below inputs */
+    font-size: 16px; /* Font size */
+}
+
+/* Button styling */
+button {
+    padding: 10px 15px; /* Padding inside the buttons */
+    border: none; /* Remove default border */
+    border-radius: 4px; /* Rounded corners for buttons */
+    cursor: pointer; /* Pointer cursor on hover */
+    font-size: 16px; /* Font size */
+}
+
+/* Specific button styles */
+#updateChildDetailsBtn {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+}
+
+#updateChildDetailsBtn:hover {
+    background-color: #45a049; /* Darker green on hover */
+}
+
+#closeChildEditFormBtn {
+    background-color: #f44336; /* Red background */
+    color: white; /* White text */
+    margin-left: 10px; /* Space between buttons */
+}
+
+#closeChildEditFormBtn:hover {
+    background-color: #e53935; /* Darker red on hover */
+}
+
