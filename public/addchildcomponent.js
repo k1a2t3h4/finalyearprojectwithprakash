@@ -17,20 +17,29 @@ function findcomponentfromcollectioncomponent(parentComponent,code) {
 }
 let selectedchildcomponent=null;
 let selectedParentwithchildComponent=null;
-function createchildren(componentData,code) {
+function createchildren(componentData, code) {
     childComponentsListDiv.innerHTML = ''; 
     componentData.children.forEach(child => {
         const childDiv = document.createElement('div');
         childDiv.className = 'child-component';
-        childDiv.innerHTML = `
-            <h3>${child.data.title}</h3>
-            <p>${child.data.description}</p>
-            <button class="add-child-btn">Add</button>
-        `;
+
+        switch (child.type) {
+            case 'style1':
+                childDiv.innerHTML = `
+                <div class='item bg-white border border-gray-200 rounded-lg shadow-md overflow-hidden transition-transform transform hover:translate-y-1'>
+                    <img src="${child.data.image}" alt="Placeholder image of ${child.data.title}" class="w-full h-48 object-cover">
+                <div class="item-content p-4">
+                    <h3 class="item-titl    e text-lg font-bold mb-2">${child.data.title}</h3>
+                    <a href="${child.data.link}" class="item-link inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-700">Buy Now</a>
+                </div>
+                    <button class="add-child-btn">Add</button>
+                `;
+                break;
+        }
 
         childDiv.querySelector('.add-child-btn').addEventListener('click', () => {
-            selectedchildcomponent=child;
-            selectedParentwithchildComponent=code;
+            selectedchildcomponent = child;
+            selectedParentwithchildComponent = code;
             createchildForm(child.data);
         });
 
@@ -152,8 +161,12 @@ saveChildBtn.addEventListener('click', () => {
                 })
                     .then(response => response.json())
                     .then(result => {
-                        console.log('Child component saved:', result);
-                        alert('Component saved successfully with instance: ' + instance + ' and order: ' + order);
+                        // console.log('Child component saved:', result);
+                        // alert('Component saved successfully with instance: ' + instance + ' and order: ' + order);
+                        setTimeout(() => {
+                            location.reload();
+                        }, 2000);
+                        
                         childComponentGalleryPopup.style.display = 'none';
                     })
                     .catch(error => {

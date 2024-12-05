@@ -23,6 +23,26 @@
     <% if (error) { %>
       <p style="color: red;"><%= error %></p>
     <% } %>
+
+    <h2>Register</h2>
+    <form action="/register" method="POST">
+      <div>
+        <label>Username:</label>
+        <input type="text" name="username" required />
+      </div>
+      <div>
+        <label>Password:</label>
+        <input type="password" name="password" required />
+      </div>
+      <div>
+        <label>Category:</label>
+        <input type="text" name="category" required />
+      </div>
+      <button type="submit">Register</button>
+    </form>
+    <% if (typeof registerError !== 'undefined' && registerError) { %>
+      <p style="color: red;"><%= registerError %></p>
+    <% } %>
   </div>
 </body>
 </html>

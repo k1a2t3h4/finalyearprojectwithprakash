@@ -41,7 +41,7 @@ async function connectDB() {
         await client.connect();
         db = client.db(dbName);
         components = db.collection('components');
-        users = db.collection('users'); // Main users collection
+        users = db.collection('users'); 
         console.log("Connected to the database.");
     } catch (error) {
         console.error("Error connecting to database:", error);
@@ -55,11 +55,10 @@ app.post('/login', async (req, res) => {
         if (!user) {
             return res.render('login', { error: 'Invalid username or password' });
         }
-
         const match = await bcrypt.compare(password, user.password);
 
         if (match) {
-            // Store username and category in session
+
             req.session.loggedIn = true;
             req.session.user = {
                 username: user.username,
@@ -74,7 +73,46 @@ app.post('/login', async (req, res) => {
         return res.render('login', { error: 'An error occurred, please try again' });
     }
 });
+app.post('/register', async (req, res) => {
+    const { username, password, category } = req.body;
+    try {
+        // Check if the user already exists
+        const existingUser  = await users.findOne({ username });
+        if (existingUser ) {
+            return res.render('login', { error: null, registerError: 'Username already exists' });
+        }
 
+        // Hash the password
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        // Insert the new user into the database
+        const userCollection = await db.collection('users'); // Ensure 'users' is a string
+        await userCollection.insertOne({
+            username: username,
+            password: hashedPassword,
+            category: category
+        });
+
+        const createCollection = await db.collection(category); // Ensure 'users' is a string
+        await createCollection.insertOne({
+            username: username,
+            components:[]
+        });
+        // Set session variables
+        req.session.loggedIn = true;
+        req.session.user = {
+            username: username,
+            category: category
+        };
+        
+        // Redirect to the profile page
+        return res.redirect('/profile');
+    } catch (error) {
+        console.error("Error during registration:", error);
+        // Pass registerError even if there is an error during registration
+        return res.render('login', { error: null, registerError: 'An error occurred, please try again' });
+    }
+});
 app.get('/profile', (req, res) => {
     if (!req.session.loggedIn) {
         return res.redirect('/');

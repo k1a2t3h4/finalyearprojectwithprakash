@@ -186,6 +186,8 @@ button#closeeditFormBtn:hover {
 }
 
 #component-gallery {
+    display: flex;
+    flex-direction: column;
     max-width: 90%;
     max-height: 80%;
     overflow-y: auto;
@@ -195,7 +197,7 @@ button#closeeditFormBtn:hover {
 }
 
 .form-popup {
-    width: 70%; /* Adjust width to make it larger */
+    
     max-width: 800px; /* Set a maximum width */
     padding: 20px;
     background-color: #fff;

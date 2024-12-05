@@ -14,7 +14,12 @@ addComponentBtn.addEventListener('click', () => {
     componentGallery.style.display = 'block';  // Show component gallery within overlay
 
     fetch('/components')
-        .then(res => res.json())
+        .then(res => {
+            if (!res.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return res.json();
+        })
         .then(components => {
             componentGallery.innerHTML = ''; 
 
@@ -23,13 +28,21 @@ addComponentBtn.addEventListener('click', () => {
                 parentDiv.className = "parent-component";
         
                 switch (parentComponent.type) {
-                    case 'component1':
-                    case 'component2':
+                    case 'tree1':
                         parentDiv.innerHTML = `
-                            <h2>${parentComponent.data.title}</h2>
-                            <p>${parentComponent.data.description}</p>
+                            <div class="container mx-auto p-4">
+                                <h2 id="list-title" class="text-2xl font-bold mb-4 text-center">${parentComponent.data.title}</h2>
+                                <div class="item-list grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="item-list">
+                                    
+                                </div>
+                            </div>
                             <button class="choose-component-btn">ADD</button>
-                        `;    
+                            `;
+                        if (Array.isArray(parentComponent.children)) {
+                            fetchChildComponent(parentComponent.children, parentDiv.querySelector('#item-list'));
+                        } else {
+                            console.warn("No children found for parent component:", parentComponent);
+                        }
                         const chooseComponentBtn = parentDiv.querySelector('.choose-component-btn');
                         chooseComponentBtn.addEventListener('click', () => {
                             chooseComponentBtn.style.display = 'none';
@@ -57,7 +70,7 @@ addComponentBtn.addEventListener('click', () => {
         })
         .catch(error => {
             console.error("Error fetching components:", error);
-            componentGallery.innerHTML = "<p>Error loading components</p>";
+            componentGallery.innerHTML = "<p>Error loading components: " + error.message + "</p>";
         });
 });
 
