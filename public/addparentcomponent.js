@@ -8,10 +8,9 @@ const closeFormBtn = document.getElementById('closeFormBtn');
 
 let selectedParentComponent = null;
 
-// Show the component gallery as a popup
 addComponentBtn.addEventListener('click', () => {
-    overlay.style.display = 'flex';  // Show overlay to center content
-    componentGallery.style.display = 'block';  // Show component gallery within overlay
+    overlay.style.display = 'flex';  
+    componentGallery.style.display = 'block';  
 
     fetch('/components')
         .then(res => {
@@ -46,14 +45,12 @@ addComponentBtn.addEventListener('click', () => {
                         const chooseComponentBtn = parentDiv.querySelector('.choose-component-btn');
                         chooseComponentBtn.addEventListener('click', () => {
                             chooseComponentBtn.style.display = 'none';
-                            // Hide all other components except the selected one
                             Array.from(componentGallery.children).forEach(child => {
                                 if (child !== parentDiv) {
                                     child.style.display = 'none';
                                 }
                             });
 
-                            // Show the form below the selected component
                             createForm(parentComponent.data);
                             selectedParentComponent = parentComponent; 
                             formPopup.style.display = 'block';
@@ -74,20 +71,18 @@ addComponentBtn.addEventListener('click', () => {
         });
 });
 
-// Save button and close form actions
 saveBtn.addEventListener('click', () => {
-    overlay.style.display = 'none'; // Hide overlay after saving
+    overlay.style.display = 'none'; 
     formPopup.style.display = 'none';
     componentGallery.style.display = 'none';
 });
 
 closeFormBtn.addEventListener('click', () => {
-    overlay.style.display = 'none'; // Hide overlay and form on close
+    overlay.style.display = 'none';
     formPopup.style.display = 'none';
     componentGallery.style.display = 'none';
 });
 
-// Close the popup when clicking outside the component gallery or form popup
 overlay.addEventListener('click', (event) => {
     if (event.target === overlay) {
         overlay.style.display = 'none';

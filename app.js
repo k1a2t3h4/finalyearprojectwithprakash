@@ -10,19 +10,16 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static('public'));
+
 app.set('view engine', 'ejs');
 
-// Middleware to handle JSON and static files
 app.use(express.json());
 app.use(express.static(path.join(__dirname, './public')));
 
-// Add session middleware
 app.use(session({
-    secret: 'innu vegama',  // Replace 'yourSecretKey' with a strong secret key
-    resave: false,
+    secret: 'innu vegama',  
     saveUninitialized: true,
-    cookie: {  maxAge: 2 * 24 * 60 * 60 * 1000 }  // Set secure to true if using HTTPS
+    cookie: {  maxAge: 2 * 24 * 60 * 60 * 1000 }  
 }));
 
 
